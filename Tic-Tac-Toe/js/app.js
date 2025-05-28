@@ -13,7 +13,8 @@ const gameSettings = {
         enabled: true,
         rows: 3,
         cols: 3,
-    }
+    },
+    gameEnded: false,
 }
 
 const emptyGrid = (rows, cols) => Array.from({ length: rows }, () => Array(cols).fill(null));
@@ -33,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 document.addEventListener("click", function(e) {
-    if(e.target.id != "canvas") return;
+    if(e.target.id != "canvas" || gameSettings.gameEnded) return;
     let { x, y } = gameCanvas.getGridCoordsFromPosition(e.offsetX, e.offsetY, gameSettings);
     processPlayerTurn(x, y);
 });
@@ -46,6 +47,7 @@ function processPlayerTurn(gridX, gridY){
 
     if (checkWin(gameState.activePlayer, gameState.gridState)) {
         soundPlayer.playTune.ff();
+        gameSettings.gameEnded = true;
         //alert(`Player ${gameState.activePlayer + 1} wins!`);
         return;
     }
