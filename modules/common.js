@@ -11,6 +11,9 @@ class Canvas {
         this.ctx = canvas.getContext("2d");
         this.ctx.scale(1,1);
 
+        let cellSize = gameSettings.width / gameSettings.grid.cols;
+        gameSettings.height = cellSize * gameSettings.grid.rows;
+
         canvas.setAttribute("width", gameSettings.width);
         canvas.setAttribute("height", gameSettings.height);
 
@@ -38,12 +41,23 @@ class Canvas {
         this.ctx.stroke();
     }
 
-    drawCircle(x, y, r, color){
-        this.ctx.strokeStyle = color;
+    drawCircle(x, y, r, borderColor){
+        this.ctx.strokeStyle = borderColor;
         this.ctx.lineWidth = 1.5;
 
         this.ctx.beginPath();
         this.ctx.arc(x + 0.5, y + 0.5, r - 0.5, 0, Math.PI * 2);
+        this.ctx.stroke();
+    }
+
+    drawFilledCircle(x, y, r, borderColor, fillColor){
+        this.ctx.strokeStyle = borderColor;
+        this.ctx.fillStyle = fillColor;
+        this.ctx.lineWidth = 1.5;
+
+        this.ctx.beginPath();
+        this.ctx.arc(x + 0.5, y + 0.5, r - 0.5, 0, Math.PI * 2);
+        this.ctx.fill();
         this.ctx.stroke();
     }
 
